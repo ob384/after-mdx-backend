@@ -44,7 +44,7 @@ app.get("/api/search/courses", (req, res)=>{
 })
 
 app.get("/images/640x4:3", (req,res)=>{
-  path.join(__dirname, "public", "images", "placeholder.png")
+  res.sendFile(path.join(__dirname, "public", "images", "placeholder.png"));
 })
 
 app.post('/signup', (req, res)=>{
