@@ -11,7 +11,7 @@ app.use((req, res,next)=>{
   next()
 })
 
-app.use(express.static('docs'))
+app.use(express.static('https://after-mdx-backend.onrender.com/'))
 
 app.use(express.urlencoded({extended: true}))
 
