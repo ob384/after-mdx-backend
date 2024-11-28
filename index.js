@@ -43,6 +43,10 @@ app.get("/api/search/courses", (req, res)=>{
   DAO.search(req.query['course-name'].trim()).then(d => res.json(d))
 })
 
+app.get("/images/640x4:3", (req,res)=>{
+  res.sendFile("/public/images/placeholder.png")
+})
+
 app.post('/signup', (req, res)=>{
   
 })
