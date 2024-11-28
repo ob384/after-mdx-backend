@@ -11,7 +11,7 @@ app.use((req, res,next)=>{
   next()
 })
 
-app.use(express.static('https://after-mdx-backend.onrender.com/'))
+app.use(express.static('public'))
 
 app.use(express.urlencoded({extended: true}))
 
@@ -36,11 +36,13 @@ app.get('/api/courses/pages', (req,res)=>{
 })
 
 app.get('/api/courses/:courseID', (req, res)=>{
-  // console.log(req.params.courseID);
   DAO.getCourse(req.params.courseID).then((d) => res.json(d))
 })
 
 app.get("/api/search/courses", (req, res)=>{
-  // console.log(req.query['course-name']);
   DAO.search(req.query['course-name'].trim()).then(d => res.json(d))
+})
+
+app.post('/signup', (req, res)=>{
+  
 })
