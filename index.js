@@ -2,6 +2,7 @@ const express = require("express");
 const { DAO } = require("./api/dao");
 const app = express();
 const cors = require("cors");
+const path = require('path');
 new DAO();
 
 app.use(cors());
