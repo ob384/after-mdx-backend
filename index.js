@@ -18,16 +18,7 @@ app.use(cors({
   // app.use(cors())
   app.use(cookieParser());
 
-// app.use(session({
-//   secret: crypto.randomBytes(16).toString("hex"),
-//   resave: false,
-//   saveUninitialized: false,
-//   cookie: {
-//     httpOnly: true, // Prevents client-side scripts from accessing the cookie
-//     secure: true, // Set to `true` in production with HTTPS
-//     maxAge: 24 * 60 * 60 * 1000 // Session expiration time in milliseconds
-//   }
-// }))
+
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}))
@@ -43,34 +34,36 @@ app.use((req, res,next)=>{
 app.listen(process.env.PORT || 3001)
 
 app.post('/signup', (req, res) => {
-  
-  DAO.addUser(req.body).then(()=>{
+  DAO.addUser(req.body).then(() => {
     const username = req.body.email.split("@")[0];  // Assuming the username is part of the email
 
-
+    // Set cookie with username
     res.cookie('username', username, {
       httpOnly: false,   // Allow access to the cookie via JavaScript
-      secure: false,     // Set to true in production if you're using HTTPS
+      secure: false,     // Set to true in production with HTTPS
       maxAge: 6 * 60 * 60 * 1000, // 6 hours expiration
       sameSite: 'None',  // Allow cross-origin cookies
-      domain: 'ob384.github.io'  // Correct domain, without protocol or path
+      domain:'ob384.github.io',  // Correct domain for production, empty for local
     });
 
-  res.redirect(`${req.headers.referer}after-mdx-front-end/`)
-  }).catch((e)=> (console.log(e.message)));
-})
+    res.redirect(`${req.headers.referer}after-mdx-front-end/`); // Redirect after signup
+  }).catch((e) => {
+    console.log(e.message);
+  });
+});
 
-app.get("/session-test", (req, res)=>{
-  // console.log(req.session.username);
-  console.log('Session Username:', req.session.username);
-  res.send(req.session.username)
-})
+// Test session (for logging purposes)
+app.get("/session-test", (req, res) => {
+  console.log('Session Username:', req.session ? req.session.username : 'No session data');
+  res.send(req.session ? req.session.username : 'No session data');
+});
 
+// API to get username from the cookie
 app.get('/api/username', (req, res) => {
-  // Retrieve the username from the cookie
-  const username = req.cookies.username || '';  // Default to empty string if no cookie is set
-  console.log(username);
-  res.send(username);
+  console.log('Cookies sent:', req.cookies);  // Log all cookies to verify
+  const username = req.cookies.username || '';  // Get username from cookie
+  console.log('Username from cookie:', username);
+  res.send(username);  // Send username back to frontend
 });
 
 // API Routes
