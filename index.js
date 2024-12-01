@@ -69,7 +69,8 @@ app.get("/session-test", (req, res)=>{
 app.get('/api/username', (req, res) => {
   // Retrieve the username from the cookie
   const username = req.cookies.username || '';  // Default to empty string if no cookie is set
-  res.json({ username });
+  console.log(username);
+  res.send({ username });
 });
 
 // API Routes
