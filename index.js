@@ -5,7 +5,6 @@ const cors = require("cors");
 const session = require('express-session');
 const crypto = require("crypto");
 const { Console } = require("console");
-const path = require ("path")
 
 new DAO();
 
@@ -33,10 +32,6 @@ app.use((req, res,next)=>{
   next()
 })
 
-app.use((req, res, next) => {
-  console.log('Session Data Update:', req.session);
-  next();
-});
 
 app.listen(process.env.PORT || 3001)
 
@@ -82,11 +77,10 @@ app.get("/api/search/courses", (req, res)=>{
   DAO.search(req.query['course-name'].trim()).then(d => res.json(d))
 })
 
+// END OF API ROUTES THAT WORK
+
 app.get("/api/username", (req, res) => {
   console.log(`Username console log ${req.session.username}`);
   res.json({ username: req.session.username || "" });
 });
 
-app.get("images/640x4:3", (req, res)=>{
-  res.sendFile(path.join(__dirname, './public/images/placeholder.png'))
-})
