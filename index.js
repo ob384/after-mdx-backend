@@ -8,7 +8,9 @@ const { Console } = require("console");
 
 new DAO();
 
+
 app.use(cors({
+  origin: 'https://ob384.github.io/', // Frontend domain
   credentials: true,
 }));
 
@@ -18,11 +20,12 @@ app.use(session({
   saveUninitialized: false,
   cookie: {
     httpOnly: true, // Prevents client-side scripts from accessing the cookie
-    secure: false, // Set to `true` in production with HTTPS
+    secure: true, // Set to `true` in production with HTTPS
     maxAge: 24 * 60 * 60 * 1000 // Session expiration time in milliseconds
   }
 }))
 
+app.use(express.json());
 app.use(express.urlencoded({extended: true}))
 
 app.use(express.static('public'))
