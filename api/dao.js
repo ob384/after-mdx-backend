@@ -23,16 +23,19 @@ class DAO {
     }
   }
 
-  static addUser = async (object)=>{
+  static addUser = async (userObject)=>{
     try {
       // client.connect();
       const database = client.db("aftermdx")
-      console.log(database);
+      userObject.username = userObject.email.split( "@")[0]
+      console.log(userObject);
       
       const collection = database.collection("users")
-      const result = await collection.insertOne(object)
+      await collection.createIndex({ username: 1 }, { unique: true });
+      await collection.createIndex({ email: 1 }, { unique: true });
+      const result = await collection.insertOne(userObject)
       console.log(`Insertion ${result.insertedId}: Complete`);
-      // client.close();      
+      // client.close();
     } catch (error) {
       console.error(error.message)
     }
@@ -40,7 +43,6 @@ class DAO {
 
   static getTrendingCourses = async () =>{
     try{
-      // client.connect();
       const database = client.db("aftermdx")
       const collection = database.collection("courses");
 
@@ -56,7 +58,6 @@ class DAO {
 
   static getCourses = async () =>{
   try {
-    // client.connect();
     const database = client.db("aftermdx")
     const collection = database.collection("courses");
 
