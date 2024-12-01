@@ -40,10 +40,10 @@ app.post('/signup', (req, res) => {
     // Set cookie with username
     res.cookie('username', username, {
       httpOnly: false,   // Allow access to the cookie via JavaScript
-      secure: false,     // Set to true in production with HTTPS
+      secure: true,      // Use HTTPS in production
       maxAge: 6 * 60 * 60 * 1000, // 6 hours expiration
-      sameSite: 'None',  // Allow cross-origin cookies
-      domain: 'ob384.github.io',  // Correct domain for production, empty for local
+      sameSite: 'None',  // Required for cross-origin cookies
+      domain: 'github.io', // Correct domain for cross-origin cookies
     });
 
     // Log the username variable directly
