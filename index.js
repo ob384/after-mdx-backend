@@ -10,11 +10,12 @@ const cookieParser = require('cookie-parser');
 new DAO();
 
 
-// app.use(cors({
-  //   origin: 'https://ob384.github.io/', // Frontend domain
-  //   credentials: true,
-  // }));
-  app.use(cors())
+app.use(cors({
+    origin: 'https://ob384.github.io', // Frontend domain
+    credentials: true,
+  }));
+
+  // app.use(cors())
   app.use(cookieParser());
 
 // app.use(session({
@@ -47,7 +48,6 @@ app.post('/signup', (req, res) => {
     const username = req.body.email.split("@")[0];  // Assuming the username is part of the email
 
 
-    // Set the cookie with the username (expires in 1 day)
     res.cookie('username', username, {
       httpOnly: false,   // Allow access to the cookie via JavaScript
       secure: false,     // Set to true in production if you're using HTTPS
@@ -70,7 +70,7 @@ app.get('/api/username', (req, res) => {
   // Retrieve the username from the cookie
   const username = req.cookies.username || '';  // Default to empty string if no cookie is set
   console.log(username);
-  res.send({ username });
+  res.send(username);
 });
 
 // API Routes
