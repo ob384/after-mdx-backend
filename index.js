@@ -43,7 +43,7 @@ app.post('/signup', (req, res) => {
       secure: true,      // Use HTTPS in production
       maxAge: 6 * 60 * 60 * 1000, // 6 hours expiration
       sameSite: 'strict',  // Required for cross-origin cookies
-      domain: 'github.io', // Correct domain for cross-origin cookies
+      // domain: 'github.io', // Correct domain for cross-origin cookies
     });
 
     // Log the username variable directly
