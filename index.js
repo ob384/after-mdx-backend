@@ -42,7 +42,7 @@ app.post('/signup', (req, res) => {
       httpOnly: false,   // Allow access to the cookie via JavaScript
       secure: true,      // Use HTTPS in production
       maxAge: 6 * 60 * 60 * 1000, // 6 hours expiration
-      sameSite: 'None',  // Required for cross-origin cookies
+      sameSite: 'strict',  // Required for cross-origin cookies
       domain: 'github.io', // Correct domain for cross-origin cookies
     });
 
