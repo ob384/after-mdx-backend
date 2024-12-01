@@ -9,10 +9,11 @@ const { Console } = require("console");
 new DAO();
 
 
-app.use(cors({
-  origin: 'https://ob384.github.io/', // Frontend domain
-  credentials: true,
-}));
+// app.use(cors({
+//   origin: 'https://ob384.github.io/', // Frontend domain
+//   credentials: true,
+// }));
+app.use(cors())
 
 app.use(session({
   secret: crypto.randomBytes(16).toString("hex"),
