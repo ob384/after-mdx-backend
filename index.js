@@ -15,16 +15,16 @@ new DAO();
 // }));
 app.use(cors())
 
-app.use(session({
-  secret: crypto.randomBytes(16).toString("hex"),
-  resave: false,
-  saveUninitialized: false,
-  cookie: {
-    httpOnly: true, // Prevents client-side scripts from accessing the cookie
-    secure: true, // Set to `true` in production with HTTPS
-    maxAge: 24 * 60 * 60 * 1000 // Session expiration time in milliseconds
-  }
-}))
+// app.use(session({
+//   secret: crypto.randomBytes(16).toString("hex"),
+//   resave: false,
+//   saveUninitialized: false,
+//   cookie: {
+//     httpOnly: true, // Prevents client-side scripts from accessing the cookie
+//     secure: true, // Set to `true` in production with HTTPS
+//     maxAge: 24 * 60 * 60 * 1000 // Session expiration time in milliseconds
+//   }
+// }))
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}))
