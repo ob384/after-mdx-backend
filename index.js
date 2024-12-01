@@ -47,7 +47,7 @@ app.post('/signup', (req, res) => {
 
     // Set the cookie with the username (expires in 1 day)
   res.cookie('username', username, {
-    httpOnly: true,   // Prevents access to the cookie via JavaScript
+    httpOnly: false,   // Prevents access to the cookie via JavaScript
     secure: false,    // Set to true in production if you're using https
     maxAge: 6 * 60 * 60 * 1000, // 1 day expiration
     sameSite: 'None',  // Allow cross-origin cookies
