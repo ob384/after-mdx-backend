@@ -4,6 +4,7 @@ const app = express();
 const cors = require("cors");
 const session = require('express-session');
 const crypto = require("crypto");
+const { Console } = require("console");
 
 new DAO();
 
@@ -42,6 +43,8 @@ app.post('/signup', (req, res) => {
     });
     // res.send({ username: req.session.username || '' });
     // res.redirect(req.headers.referer)
+    console.log(`Username from sign up session ${req.session.username}`);
+    
     console.log(req.headers.referer)
     res.redirect(`${req.headers.referer}after-mdx-front-end/`)
     // res.redirect("/session-test")
