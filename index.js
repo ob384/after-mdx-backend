@@ -52,6 +52,7 @@ app.post('/signup', (req, res) => {
     maxAge: 6 * 60 * 60 * 1000, // 1 day expiration
     sameSite: 'None',  // Allow cross-origin cookies
   });
+  res.redirect(`${req.headers.referer}aafter-mdx-front-end/`)
   }).catch((e)=> (console.log(e.message)));
 })
 
