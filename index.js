@@ -43,11 +43,11 @@ app.post('/signup', (req, res) => {
       secure: false,     // Set to true in production with HTTPS
       maxAge: 6 * 60 * 60 * 1000, // 6 hours expiration
       sameSite: 'None',  // Allow cross-origin cookies
-      domain:'ob384.github.io',  // Correct domain for production, empty for local
+      domain: 'ob384.github.io',  // Correct domain for production, empty for local
     });
 
-    console.log(`Username from cookie in signup route ${req.cookies.username}`);
-    
+    // Log the username variable directly
+    console.log(`Sign up Username set in cookie: ${username}`);
 
     res.redirect(`${req.headers.referer}after-mdx-front-end/`); // Redirect after signup
   }).catch((e) => {
@@ -55,18 +55,17 @@ app.post('/signup', (req, res) => {
   });
 });
 
+
 // Test session (for logging purposes)
 app.get("/session-test", (req, res) => {
   console.log('Session Username:', req.session ? req.session.username : 'No session data');
   res.send(req.session ? req.session.username : 'No session data');
 });
 
-// API to get username from the cookie
 app.get('/api/username', (req, res) => {
-  console.log('Cookies sent:', req.cookies.username);  // Log all cookies to verify
-  const username = req.cookies.username || '';  // Get username from cookie
-  console.log('Username from cookie:', username);
-  res.send(username);  // Send username back to frontend
+  const username = req.cookies.username || '';  // Read the username from the cookie
+  console.log(`Username from cookie in /api/username route: ${username}`);
+  res.send(username);
 });
 
 // API Routes
