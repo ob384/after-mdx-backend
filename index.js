@@ -4,16 +4,18 @@ const app = express();
 const cors = require("cors");
 const session = require('express-session');
 const crypto = require("crypto");
-const { Console } = require("console");
+const cookieParser = require('cookie-parser');
+
 
 new DAO();
 
 
 // app.use(cors({
-//   origin: 'https://ob384.github.io/', // Frontend domain
-//   credentials: true,
-// }));
-app.use(cors())
+  //   origin: 'https://ob384.github.io/', // Frontend domain
+  //   credentials: true,
+  // }));
+  app.use(cors())
+  app.use(cookieParser());
 
 // app.use(session({
 //   secret: crypto.randomBytes(16).toString("hex"),
@@ -53,18 +55,23 @@ app.post('/signup', (req, res) => {
       sameSite: 'None',  // Allow cross-origin cookies
       domain: 'ob384.github.io'  // Correct domain, without protocol or path
     });
-    
+
   res.redirect(`${req.headers.referer}after-mdx-front-end/`)
   }).catch((e)=> (console.log(e.message)));
 })
-
-
 
 app.get("/session-test", (req, res)=>{
   // console.log(req.session.username);
   console.log('Session Username:', req.session.username);
   res.send(req.session.username)
 })
+
+app.get('/api/username', (req, res) => {
+  // Retrieve the username from the cookie
+  const username = req.cookies.username || '';  // Default to empty string if no cookie is set
+  res.json({ username });
+});
+
 // API Routes
 app.get("/api/courses/trending", (req, res)=>{
   DAO.getTrendingCourses().then((d) =>(res.json(d)))
