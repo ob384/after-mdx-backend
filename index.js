@@ -5,6 +5,7 @@ const cors = require("cors");
 const session = require('express-session');
 const crypto = require("crypto");
 const { Console } = require("console");
+const path = require ("path")
 
 new DAO();
 
@@ -23,6 +24,10 @@ app.use(session({
   }
 }))
 
+app.use(express.urlencoded({extended: true}))
+
+app.use(express.static('public'))
+
 app.use((req, res,next)=>{
   console.log(`A ${req.method} request come from ${req.url}`);
   next()
@@ -32,10 +37,6 @@ app.use((req, res, next) => {
   console.log('Session Data Update:', req.session);
   next();
 });
-app.use(express.urlencoded({extended: true}))
-
-app.use(express.static('public'))
-
 
 app.listen(process.env.PORT || 3001)
 
@@ -87,3 +88,7 @@ app.get("/api/username", (req, res) => {
   console.log(`Username console log ${req.session.username}`);
   res.json({ username: req.session.username || "" });
 });
+
+app.get("images/640x4:3", (req, res)=>{
+  res.sendFile(path.join(__dirname, './public/images/placeholder.png'))
+})
