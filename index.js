@@ -46,6 +46,9 @@ app.post('/signup', (req, res) => {
       domain:'ob384.github.io',  // Correct domain for production, empty for local
     });
 
+    console.log(`Username from cookie in signup route ${req.cookies.username}`);
+    
+
     res.redirect(`${req.headers.referer}after-mdx-front-end/`); // Redirect after signup
   }).catch((e) => {
     console.log(e.message);
@@ -60,7 +63,7 @@ app.get("/session-test", (req, res) => {
 
 // API to get username from the cookie
 app.get('/api/username', (req, res) => {
-  console.log('Cookies sent:', req.cookies);  // Log all cookies to verify
+  console.log('Cookies sent:', req.cookies.username);  // Log all cookies to verify
   const username = req.cookies.username || '';  // Get username from cookie
   console.log('Username from cookie:', username);
   res.send(username);  // Send username back to frontend
