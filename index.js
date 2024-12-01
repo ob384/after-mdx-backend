@@ -42,21 +42,25 @@ app.listen(process.env.PORT || 3001)
 app.post('/signup', (req, res) => {
   
   DAO.addUser(req.body).then(()=>{
-    req.session.username = req.body.email.split("@")[0];
-    req.session.save();
-    // res.send({ username: req.session.username || '' });
-    // res.redirect(req.headers.referer)
-    console.log(`Username from sign up session ${req.session.username}`);
-    
-    console.log(req.headers.referer)
-    res.redirect(`${req.headers.referer}after-mdx-front-end/`)
-    // res.redirect("/session-test")
+    const username = req.body.email.split("@")[0];  // Assuming the username is part of the email
+
+
+    // Set the cookie with the username (expires in 1 day)
+  res.cookie('username', username, {
+    httpOnly: true,   // Prevents access to the cookie via JavaScript
+    secure: false,    // Set to true in production if you're using https
+    maxAge: 6 * 60 * 60 * 1000, // 1 day expiration
+    sameSite: 'None',  // Allow cross-origin cookies
+  });
   }).catch((e)=> (console.log(e.message)));
 })
+
+
 
 app.get("/session-test", (req, res)=>{
   // console.log(req.session.username);
   console.log('Session Username:', req.session.username);
+  res.send(req.session.username)
 })
 // API Routes
 app.get("/api/courses/trending", (req, res)=>{
@@ -83,8 +87,5 @@ app.get("/api/search/courses", (req, res)=>{
 
 // END OF API ROUTES THAT WORK
 
-app.get("/api/username", (req, res) => {
-  console.log(`Username console log ${req.session.username}`);
-  res.json({ username: req.session.username || "" });
-});
+
 
