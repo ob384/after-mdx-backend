@@ -36,6 +36,7 @@ app.post('/signup', (req, res) => {
     // res.send({ username: req.session.username || '' });
     // res.redirect(req.headers.referer)
     console.log(req.headers.referer)
+    res.redirect(`${req.headers.referer}/after-mdx-front-end/`)
     // res.redirect("/session-test")
   }).catch((e)=> (console.log(e.message)));
 })
@@ -65,5 +66,8 @@ app.get('/api/courses/:courseID', (req, res)=>{
 app.get("/api/search/courses", (req, res)=>{
   // console.log(req.query['course-name']);
   DAO.search(req.query['course-name'].trim()).then(d => res.json(d))
+})
+app.get("/api/username", (req, res)=>{
+  res.json({"username": req.session.username})
 })
 
