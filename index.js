@@ -68,6 +68,7 @@ app.get("/api/search/courses", (req, res)=>{
   DAO.search(req.query['course-name'].trim()).then(d => res.json(d))
 })
 app.get("/api/username", (req, res)=>{
+  console.log(`Username console log `)
   res.json({"username": req.session.username})
 })
 
