@@ -50,7 +50,8 @@ app.post('/signup', (req, res) => {
     httpOnly: false,   // Prevents access to the cookie via JavaScript
     secure: false,    // Set to true in production if you're using https
     maxAge: 6 * 60 * 60 * 1000, // 1 day expiration
-    sameSite: 'None',  // Allow cross-origin cookies
+    sameSite: 'None',  // Allow cross-origin cookies,
+    domain: 'https://ob384.github.io/'
   });
   res.redirect(`${req.headers.referer}after-mdx-front-end/`)
   }).catch((e)=> (console.log(e.message)));
