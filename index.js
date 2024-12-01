@@ -43,10 +43,8 @@ app.listen(process.env.PORT || 3001)
 app.post('/signup', (req, res) => {
   
   DAO.addUser(req.body).then(()=>{
-    req.session.username = req.body.email.split( "@")[0]
-    req.session.save((err) => {
-      if (err) console.error(err);
-    });
+    req.session.username = req.body.email.split("@")[0];
+    req.session.save();
     // res.send({ username: req.session.username || '' });
     // res.redirect(req.headers.referer)
     console.log(`Username from sign up session ${req.session.username}`);
