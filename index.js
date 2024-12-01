@@ -36,7 +36,7 @@ app.post('/signup', (req, res) => {
     // res.send({ username: req.session.username || '' });
     // res.redirect(req.headers.referer)
     console.log(req.headers.referer)
-    res.redirect(`${req.headers.referer}/after-mdx-front-end/`)
+    res.redirect(`${req.headers.referer}after-mdx-front-end/`)
     // res.redirect("/session-test")
   }).catch((e)=> (console.log(e.message)));
 })
