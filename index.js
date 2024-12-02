@@ -75,9 +75,10 @@ app.get("/session-test", (req, res) => {
 });
 
 app.get('/api/username', (req, res) => {
-  const username = req.cookies.username || '';  // Read the username from the cookie
-  console.log(`Username from cookie in /api/username route: ${username}`);
-  res.send(username);
+  console.log('Cookies Received in /api/username:', req.cookies); // Log all cookies
+  const username = req.cookies.username || ''; // Retrieve the username
+  console.log(`Username in /api/username route: ${username}`);
+  res.send(username); // Send the username back to the frontend
 });
 
 // API Routes
