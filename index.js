@@ -78,12 +78,12 @@ app.post('/signup', (req, res) => {
 
 app.post('/login', (req, res) => {
   DAO.verifyUser(req.body).then((d)=>{
-    res.cookie('username', d.username, {
-      httpOnly: true,
-      secure: false,   
-      maxAge: 6 * 60 * 60 * 1000,
-      sameSite: 'strict',      
-    });
+    // res.cookie('username', d.username, {
+    //   httpOnly: true,
+    //   secure: false,   
+    //   maxAge: 6 * 60 * 60 * 1000,
+    //   sameSite: 'strict',      
+    // });
 
     let date = new Date();
     // res.redirect(`${req.headers.referer}after-mdx-front-end/`); 
