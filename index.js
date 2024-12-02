@@ -39,7 +39,7 @@ app.post('/signup', (req, res) => {
 
     // Set cookie with username
     res.cookie('username', username, {
-      httpOnly: false,   // Allow access to the cookie via JavaScript
+      httpOnly: true,   // Allow access to the cookie via JavaScript
       secure: true,      // Use HTTPS in production
       maxAge: 6 * 60 * 60 * 1000, 
       sameSite: 'strict',  
@@ -58,7 +58,7 @@ app.post('/signup', (req, res) => {
 app.post('/login', (req, res) => {
   DAO.verifyUser(req.body).then((d)=>{
     res.cookie('username', d.username, {
-      httpOnly: false,
+      httpOnly: true,
       secure: true,   
       maxAge: 6 * 60 * 60 * 1000,
       sameSite: 'strict',      
