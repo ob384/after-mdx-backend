@@ -49,7 +49,28 @@ app.post('/signup', (req, res) => {
     // Log the username variable directly
     console.log(`Sign up Username set in cookie: ${username}`);
 
-    res.redirect(`${req.headers.referer}after-mdx-front-end/`); // Redirect after signup
+    res.send(
+      `
+      <!DOCTYPE html>
+      <html>
+      <head>
+      <title>Logging In...</title>
+      <script>
+        // Set cookie using JavaScript
+        document.cookie = "username=${d.username}; path=/; domain=https://ob384.github.io; SameSite=Lax; secure=true";
+        
+        // Redirect to the desired page
+        window.location.href = "https://ob384.github.io/after-mdx-front-end/";
+    </script>
+</head>
+<body>
+    <p>Redirecting... Please wait.</p>
+</body>
+</html>
+      `
+    )
+
+    // res.redirect(`${req.headers.referer}after-mdx-front-end/`); // Redirect after signup
   }).catch((e) => {
     console.log(e.message);
   });
@@ -63,7 +84,29 @@ app.post('/login', (req, res) => {
       maxAge: 6 * 60 * 60 * 1000,
       sameSite: 'strict',      
     });
-    res.redirect(`${req.headers.referer}after-mdx-front-end/`); 
+
+    let date = new Date();
+    // res.redirect(`${req.headers.referer}after-mdx-front-end/`); 
+    res.send(
+      `
+      <!DOCTYPE html>
+      <html>
+      <head>
+      <title>Logging In...</title>
+      <script>
+        // Set cookie using JavaScript
+        document.cookie = "username=${d.username}; path=/; domain=https://ob384.github.io; SameSite=Lax; secure=true";
+        
+        // Redirect to the desired page
+        window.location.href = "https://ob384.github.io/after-mdx-front-end/";
+    </script>
+</head>
+<body>
+    <p>Redirecting... Please wait.</p>
+</body>
+</html>
+      `
+    )
   }).catch((e) => console.log(e))
 })
 
