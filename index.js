@@ -41,9 +41,9 @@ app.post('/signup', (req, res) => {
     res.cookie('username', username, {
       httpOnly: false,   // Allow access to the cookie via JavaScript
       secure: true,      // Use HTTPS in production
-      maxAge: 6 * 60 * 60 * 1000, // 6 hours expiration
-      sameSite: 'strict',  // Required for cross-origin cookies
-      // domain: 'github.io', // Correct domain for cross-origin cookies
+      maxAge: 6 * 60 * 60 * 1000, 
+      sameSite: 'strict',  
+      
     });
 
     // Log the username variable directly
@@ -54,6 +54,18 @@ app.post('/signup', (req, res) => {
     console.log(e.message);
   });
 });
+
+app.post('/login', (req, res) => {
+  DAO.verifyUser(req.body).then((d)=>{
+    res.cookie('username', d.username, {
+      httpOnly: false,
+      secure: true,   
+      maxAge: 6 * 60 * 60 * 1000,
+      sameSite: 'strict',      
+    });
+    res.redirect(`${req.headers.referer}after-mdx-front-end/`); 
+  }).catch((e) => console.log(e))
+})
 
 
 // Test session (for logging purposes)

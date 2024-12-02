@@ -41,6 +41,17 @@ class DAO {
     }
   }
 
+  static verifyUser = async(object)=>{
+    try {
+      const database = client.db("aftermdx")
+      const collection  = database.collection("users")
+      const result = await collection.findOne(object)
+      return result
+    } catch (error) {
+      console.error(error.message);
+    }
+  }
+
   static getTrendingCourses = async () =>{
     try{
       const database = client.db("aftermdx")
