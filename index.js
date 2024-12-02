@@ -35,42 +35,16 @@ app.listen(process.env.PORT || 3001)
 
 app.post('/signup', (req, res) => {
   DAO.addUser(req.body).then(() => {
-    const username = req.body.email.split("@")[0];  // Assuming the username is part of the email
+    const username = req.body.email.split("@")[0];
 
-    // Set cookie with username
     res.cookie('username', username, {
-      httpOnly: true,   // Allow access to the cookie via JavaScript
-      secure: false,      // Use HTTPS in production
+      httpOnly: true,   
+      secure: false,
       maxAge: 6 * 60 * 60 * 1000, 
-      sameSite: 'strict',  
-      
+      sameSite: 'strict',
     });
 
-    // Log the username variable directly
-    console.log(`Sign up Username set in cookie: ${username}`);
-
-    res.send(
-      `
-      <!DOCTYPE html>
-      <html>
-      <head>
-      <title>Logging In...</title>
-      <script>
-        // Set cookie using JavaScript
-        document.cookie = "username=${d.username}; path=/; domain=https://ob384.github.io; SameSite=Lax; secure=true";
-        
-        // Redirect to the desired page
-        window.location.href = "https://ob384.github.io/after-mdx-front-end/";
-    </script>
-</head>
-<body>
-    <p>Redirecting... Please wait.</p>
-</body>
-</html>
-      `
-    )
-
-    // res.redirect(`${req.headers.referer}after-mdx-front-end/`); // Redirect after signup
+    
   }).catch((e) => {
     console.log(e.message);
   });
@@ -78,35 +52,14 @@ app.post('/signup', (req, res) => {
 
 app.post('/login', (req, res) => {
   DAO.verifyUser(req.body).then((d)=>{
-    // res.cookie('username', d.username, {
-    //   httpOnly: true,
-    //   secure: false,   
-    //   maxAge: 6 * 60 * 60 * 1000,
-    //   sameSite: 'strict',      
-    // });
+    res.cookie('username', d.username, {
+      httpOnly: true,
+      secure: false,   
+      maxAge: 6 * 60 * 60 * 1000,
+      sameSite: 'strict',      
+    });
 
-    let date = new Date();
-    // res.redirect(`${req.headers.referer}after-mdx-front-end/`); 
-    res.send(
-      `
-      <!DOCTYPE html>
-      <html>
-      <head>
-      <title>Logging In...</title>
-      <script>
-        // Set cookie using JavaScript
-        document.cookie = "username=${d.username}; path=/; domain=https://ob384.github.io; SameSite=Lax; secure=true";
-        
-        // Redirect to the desired page
-        window.location.href = "https://ob384.github.io/after-mdx-front-end/";
-    </script>
-</head>
-<body>
-    <p>Redirecting... Please wait.</p>
-</body>
-</html>
-      `
-    )
+    
   }).catch((e) => console.log(e))
 })
 
@@ -150,7 +103,11 @@ app.get("/api/search/courses", (req, res)=>{
   DAO.search(req.query['course-name'].trim()).then(d => res.json(d))
 })
 
-// END OF API ROUTES THAT WORK
+app.post("/checkout", (req,res)=>{
+  
+})
+
+
 
 
 

@@ -135,14 +135,26 @@ class DAO {
       return result
 
     }catch (error) {
-      console.error(error.message);
-      
+      console.error(error.message); 
     }
 
 
 
   }
 
+  static addOder = async (oderObject)=>{
+    try {
+      // client.connect();
+      const database = client.db("aftermdx")
+      oderObject.time = new Date();
+      
+      const collection = database.collection("orders")
+      const result = await collection.insertOne(oderObject)
+      console.log(`Insertion ${result.insertedId}: Complete`);
+    } catch (error) {
+      console.error(error.message)
+    }
+  }
 
 }
 
