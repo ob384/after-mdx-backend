@@ -104,7 +104,7 @@ app.get("/api/search/courses", (req, res)=>{
 })
 
 app.post("/checkout", (req,res)=>{
-  
+  DAO.addOder(req.body).then(()=>{res.redirect(`${req.headers.referer}after-mdx-front-end/`);})
 })
 
 
