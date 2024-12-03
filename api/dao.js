@@ -142,15 +142,42 @@ class DAO {
 
   }
 
+  static updateOrderSpaces = async (orderList) => {
+    try {
+      const database = client.db("aftermdx")
+      const collection = database.collection("courses")
+
+      for (const order in orderList) {
+          const {course, space} = order
+          const courseData = await collection.findOne({name: course})
+        if(!courseData){
+          console.error("Course not found")
+        } else{
+          if (courseData.availableSpaces<space) {
+            console.warn(`Not enough space for ${course}`);
+            
+          } else {
+            const result = await collection.updateOne({name: course}, {$inc: { availableSpaces: -space }})
+          }
+        }
+      }
+
+
+
+    } catch (error) {
+      
+    }
+  }
+
   static addOder = async (oderObject)=>{
     try {
-      // client.connect();
-      const database = client.db("aftermdx")
       oderObject.time = new Date();
       oderObject.orderDetails = JSON.parse(oderObject.orderDetails)
+      const database = client.db("aftermdx")
       const collection = database.collection("orders")
       const result = await collection.insertOne(oderObject)
       console.log(`Insertion ${result.insertedId}: Complete`);
+      this.updateOrderSpaces(oderObject.orderDetails)
     } catch (error) {
       console.error(error.message)
     }
