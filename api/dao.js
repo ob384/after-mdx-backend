@@ -147,7 +147,7 @@ class DAO {
       // client.connect();
       const database = client.db("aftermdx")
       oderObject.time = new Date();
-      
+      oderObject.orderDetails = JSON.parse(oderObject.orderDetails)
       const collection = database.collection("orders")
       const result = await collection.insertOne(oderObject)
       console.log(`Insertion ${result.insertedId}: Complete`);
