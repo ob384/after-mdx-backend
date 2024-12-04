@@ -147,7 +147,7 @@ class DAO {
       const database = client.db("aftermdx")
       const collection = database.collection("courses")
 
-      for (const order in orderList) {
+      for (const order of orderList) {
           const {course, space} = order
           const courseData = await collection.findOne({name: course})
         if(!courseData){
@@ -158,6 +158,11 @@ class DAO {
             
           } else {
             const result = await collection.updateOne({name: course}, {$inc: { availableSpaces: -space }})
+            if (result.modifiedCount > 0) {
+              console.log(`Updated ${course}: Available spaces decremented by ${space}`);
+            } else {
+              console.warn(`No spaces updated for ${course}`);
+            }
           }
         }
       }
@@ -165,7 +170,7 @@ class DAO {
 
 
     } catch (error) {
-      
+      console.error(`Error updating order spaces: ${error.message}`);
     }
   }
 
@@ -177,7 +182,8 @@ class DAO {
       const collection = database.collection("orders")
       const result = await collection.insertOne(oderObject)
       console.log(`Insertion ${result.insertedId}: Complete`);
-      this.updateOrderSpaces(oderObject.orderDetails)
+
+      await this.updateOrderSpaces(oderObject.orderDetails)
     } catch (error) {
       console.error(error.message)
     }

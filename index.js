@@ -104,7 +104,7 @@ app.get("/api/search/courses", (req, res)=>{
 })
 
 app.post("/checkout", (req,res)=>{
-  DAO.addOder(req.body).then(()=>{res.redirect(`${req.headers.referer}after-mdx-front-end/`);})
+  DAO.addOder(req.body).then(()=>{res.status(201).send("Order Completed")}).catch(()=>{res.status(400).send("Bad Order Could Not be completed")})
 })
 
 
