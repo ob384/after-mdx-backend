@@ -10,12 +10,12 @@ const cookieParser = require('cookie-parser');
 new DAO();
 
 
-app.use(cors({
-    origin: 'https://ob384.github.io', // Frontend domain
-    credentials: true,
-  }));
+// app.use(cors({
+//     origin: 'https://ob384.github.io', // Frontend domain
+//     credentials: true,
+//   }));
 
-  // app.use(cors())
+  app.use(cors())
   app.use(cookieParser());
 
 
